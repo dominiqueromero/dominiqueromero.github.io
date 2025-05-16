@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
+import './App.css';
+import { LoadingScreen } from './components/LoadingScreen.jsx';
+import { Navbar } from './components/Navbar.jsx';
+import { MobileMenu } from './components/MobileMenu.jsx';
+import { Home } from './components/sections/Home.jsx';
+import { About } from './components/sections/About.jsx';
+import { Projects } from "./components/sections/Projects.jsx";
+import { Contact } from "./components/sections/Contact.jsx"
+import { RevealOnScroll } from './components/sections/RevealOnScroll.jsx';
+import "./index.css"
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}{" "}
+      <div className={`min-h-screen transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0}"} bg-black text-gray-100`}>
+        <Navbar menuOpen={menuOpen} serMenuOpen={setMenuOpen} />
+        <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <Home/>
+        <About/>
+        <Projects/>
+        <Contact/>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+
+  );
 }
 
 export default App
